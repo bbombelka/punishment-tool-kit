@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../src/app/components/substitutionary/substitutionary.component.sass"
+    ],
+    "names": [],
+    "file": "substitutionary.component.css"
+}

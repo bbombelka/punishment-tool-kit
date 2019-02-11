@@ -1,0 +1,262 @@
+<div class="card card-body m-5">
+  <h3 class="card-body card-title">
+    Obliczenie kary zastępczej pozbawienia wolności za niewykonaną karę ograniczenia wolności oraz
+    niewykonaną karę grzywny
+  </h3>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label (click)="punishment.selectedSocial = true" class="btn btn-secondary active">
+      <input type="radio" name="options" id="option1" autocomplete="off" checked #socialService />
+      Kara ograniczenia wolności
+    </label>
+    <label (click)="punishment.selectedSocial = false" class="btn btn-secondary">
+      <input type="radio" name="options" id="option2" autocomplete="off" #fine />
+      Kara grzywny
+    </label>
+  </div>
+  <div [hidden]="punishment.selectedSocial" class="card">
+    <div class="card-header font-weight-bold">
+      Kara zastępcza pozbawienia wolności orzekana w miejsce kary grzywny (art. 46 par. 1 K.k.w)
+    </div>
+    <div class="card-body ">
+      <form
+        id="punishmentForm"
+        #finePunishment="ngForm"
+        (ngSubmit)="onSubmitFine(finePunishment)"
+        class="form-group"
+      >
+        <div class="form-group-item d-flex">
+          <label for="rates">Wymiar kary grzywny w wyroku</label>
+          <div class="formInputs">
+            <input
+              [(ngModel)]="punishment.fine.rates"
+              type="number"
+              id="rates"
+              name="rates"
+              min="10"
+              max="540"
+              step="10"
+              #rates
+            />
+            stawek w wysokości
+
+            <input
+              [(ngModel)]="punishment.fine.rateHeight"
+              type="number"
+              id="rateHeight"
+              name="rateHeight"
+              min="10"
+              max="2000"
+              step="5"
+              #rateHeight
+            />
+            złotych
+          </div>
+        </div>
+        <div class="form-group-item">
+          <label for="paid"
+            >Grzywna wpłacona
+            <span style="font-size: 12px"
+              >(przed orzeczeniem prac społecznie użytecznych)</span
+            ></label
+          >
+          <input
+            [(ngModel)]="punishment.fine.paid"
+            type="number"
+            id="paid"
+            name="paid"
+            min="0"
+            max="1000000"
+          />
+          zł
+        </div>
+        <div class="form-group-item">
+          <label for="countedRates">Wymiar kary zaliczony w wyroku</label>
+          <input
+            [(ngModel)]="punishment.fine.countedRates"
+            type="number"
+            id="countedRates"
+            name="countedRates"
+            min="0"
+            max="720"
+          />
+          stawek
+        </div>
+        <div class="form-group-item">
+          <label for="fineToSocialService"
+            >Zamieniono na pracę społecznie użyteczną ?<input
+              type="checkbox"
+              id="fineToSocialService"
+              name="fineToSocialService"
+              class="btn btn-primary"
+              [(ngModel)]="punishment.fine.fineToSocialService"
+              [disabled]="rates.value > 120 ? true : false"
+              (click)="enableSocialServiceForm()"
+            />
+            <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">Kwotę</span>
+
+            <input
+              [(ngModel)]="punishment.fine.fineChangedToSocialService"
+              id="fineChangedToSocialService"
+              name="fineChangedToSocialService"
+              type="number"
+              [disabled]="!punishment.fine.fineToSocialService"
+            /><span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">na</span>
+          </label>
+          <input
+            name="totalMonths"
+            type="number"
+            [disabled]="!punishment.fine.fineToSocialService"
+            [(ngModel)]="punishment.socialService.totalMonths"
+          />
+          <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null"
+            >miesięcy po</span
+          >
+          <input
+            name="monthlyRate"
+            type="number"
+            [disabled]="!punishment.fine.fineToSocialService"
+            [(ngModel)]="punishment.socialService.monthlyRate"
+            min="20"
+            max="40"
+          />
+          <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null"
+            >godzin i wykonano</span
+          >
+          <input
+            name="doneHours"
+            type="number"
+            [disabled]="!punishment.fine.fineToSocialService"
+            [(ngModel)]="punishment.socialService.doneHours"
+          />
+          <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">godzin</span>
+        </div>
+
+        <button class="btn btn-primary btn-dark">Oblicz</button>
+      </form>
+    </div>
+  </div>
+  <div [hidden]="!punishment.selectedSocial" class="card">
+    <div class="card-header font-weight-bold">
+      Kara zastępcza pozbawienia wolności orzekana w miejsce kary ograniczenia wolności (art. 65
+      par. 1 K.k.w)
+    </div>
+    <div class="card-body ">
+      <form
+        id="punishmentForm"
+        #socialPunishment="ngForm"
+        (ngSubmit)="onSubmitSocial(socialPunishment)"
+        class="form-group"
+      >
+        <div class="form-group-item d-flex">
+          <label for="totalYears">Wymiar kary w wyroku</label>
+          <div class="formInputs">
+            <input
+              [(ngModel)]="punishment.socialService.totalYears"
+              type="number"
+              id="totalYears"
+              name="totalYears"
+              min="0"
+              max="2"
+              class="is-invalid"
+            />
+            lat
+
+            <input
+              [(ngModel)]="punishment.socialService.totalMonths"
+              type="number"
+              id="totalMonths"
+              name="totalMonths"
+              min="0"
+              max="11"
+            />
+            miesięcy
+          </div>
+        </div>
+        <div class="form-group-item">
+          <label for="doneHours">Godziny wykonane</label>
+          <input
+            [(ngModel)]="punishment.socialService.doneHours"
+            type="number"
+            id="doneHours"
+            name="doneHours"
+            min="0"
+            max="959"
+          />
+          h
+          <input
+            [(ngModel)]="punishment.socialService.doneMinutes"
+            type="number"
+            id="doneMinutes"
+            name="doneMinutes"
+            min="0"
+            max="55"
+            step="5"
+          />
+          minut
+        </div>
+        <div class="form-group-item">
+          <label for="monthlyRate">Miesięczny wymiar kary</label>
+          <input
+            [(ngModel)]="punishment.socialService.monthlyRate"
+            type="number"
+            id="monthlyRate"
+            name="monthlyRate"
+            min="20"
+            max="40"
+          />
+        </div>
+        <div class="form-group-item">
+          <label for="countedDays">Wymiar kary zaliczony w wyroku</label>
+          <input
+            [(ngModel)]="punishment.socialService.countedDays"
+            type="number"
+            id="countedDays"
+            name="countedDays"
+            min="0"
+            max="720"
+          />
+        </div>
+        <button class="btn btn-primary btn-dark">Oblicz</button>
+      </form>
+    </div>
+  </div>
+
+  <div [hidden]="!punishment.results.show" class="card card-body">
+    <h3>Results</h3>
+    <ul class="list-group">
+      <li *ngIf="punishment.selectedSocial" class="list-group-item-dark">
+        Całkowita liczba godzin do wykonania: {{ punishment.results.totalHours }}
+      </li>
+      <li *ngIf="punishment.selectedSocial" class="list-group-item-dark">
+        Godziny, które pozostały do wykonania: {{ punishment.results.undoneHours }}
+      </li>
+      <li *ngIf="punishment.selectedSocial" class="list-group-item-dark">
+        Pozostały wymiar kary ograniczenia wolności: {{ punishment.results.punishmentLeftDays }} dni
+      </li>
+      <li
+        *ngIf="punishment.socialService.countedDays && punishment.selectedSocial"
+        class="list-group-item-dark"
+      >
+        Kara została skrócona o {{ punishment.socialService.countedDays / 2 }}
+        <span *ngIf="punishment.socialService.countedDays / 2 === 1; else pluralDaysSpan"
+          >dzień</span
+        >
+        <ng-template #pluralDaysSpan>dni</ng-template>
+        z uwagi na zaliczenie na art. 63 par. 1 w wyroku.
+      </li>
+      <li class="list-group-item-dark" *ngIf="!punishment.selectedSocial">
+        Całkowita kwota grzywny:
+        {{ punishment.fine.rates * punishment.fine.rateHeight }} złotych
+      </li>
+      <li
+        class="list-group-item-dark"
+        *ngIf="!punishment.selectedSocial && punishment.fine.fineToSocialService"
+      >
+        Grzywna odpracowana: {{ punishment.results.workedFine | number: '1.2-2' }} złotych
+      </li>
+      <li class="list-group-item-dark">
+        Wymiar zastępczej kary pozbawienia wolności: {{ punishment.results.main }} dni
+      </li>
+    </ul>
+  </div>
+</div>
