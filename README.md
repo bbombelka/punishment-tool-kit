@@ -1,3 +1,13 @@
+
+Welcome to PunishmentToolKit
+
+I designed this app to be a helpful resource for Penal Departments of polish Regional Courts (and to facilitate my work of course ;-))
+Final version will have four modules. Current version is early and holds only one module - that calculates the length of substitutionary punishment. (oblicz karę zastępczą). Modules to calculate punishment execution expiry, calculate fine installments and to calculate social service length when changing its form. 
+
+You can see currently working module at https://bbombelka.github.io/punishment-tool-kit/subst. Forms are working pursuant to valid legislation (eg. number of fine stakes ). Module is still in development.
+
+
+-- - - -
 # PunishmentToolKit
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.3.
