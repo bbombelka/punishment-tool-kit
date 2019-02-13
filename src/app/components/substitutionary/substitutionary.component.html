@@ -4,11 +4,17 @@
     niewykonaną karę grzywny
   </h3>
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label (click)="punishment.selectedSocial = true" class="btn btn-secondary active">
+    <label
+      (click)="!punishment.selectedSocial ? clearForms() : null; punishment.selectedSocial = true"
+      class="btn btn-secondary active"
+    >
       <input type="radio" name="options" id="option1" autocomplete="off" checked #socialService />
       Kara ograniczenia wolności
     </label>
-    <label (click)="punishment.selectedSocial = false" class="btn btn-secondary">
+    <label
+      (click)="punishment.selectedSocial ? clearForms() : null; punishment.selectedSocial = false"
+      class="btn btn-secondary"
+    >
       <input type="radio" name="options" id="option2" autocomplete="off" #fine />
       Kara grzywny
     </label>
@@ -82,26 +88,29 @@
           stawek
         </div>
         <div class="form-group-item">
-          <label for="fineToSocialService"
-            >Zamieniono na pracę społecznie użyteczną ?<input
-              type="checkbox"
-              id="fineToSocialService"
-              name="fineToSocialService"
-              class="btn btn-primary"
-              [(ngModel)]="punishment.fine.fineToSocialService"
-              [disabled]="rates.value > 120 ? true : false"
-              (click)="enableSocialServiceForm()"
-            />
-            <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">Kwotę</span>
+          <label for="fineToSocialService">Zamieniono na pracę społecznie użyteczną ? </label>
+          <input
+            type="checkbox"
+            id="fineToSocialService"
+            name="fineToSocialService"
+            class="checkbox"
+            [(ngModel)]="punishment.fine.fineToSocialService"
+            [disabled]="rates.value > 120 ? true : false"
+            (click)="enableSocialServiceForm()"
+          />
+        </div>
+        <div class="form-group-item">
+          <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">Kwotę</span>
+          <input
+            [(ngModel)]="punishment.fine.fineChangedToSocialService"
+            id="fineChangedToSocialService"
+            name="fineChangedToSocialService"
+            type="number"
+            [disabled]="!punishment.fine.fineToSocialService"
+          /><span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null"
+            >zł zamieniono na</span
+          >
 
-            <input
-              [(ngModel)]="punishment.fine.fineChangedToSocialService"
-              id="fineChangedToSocialService"
-              name="fineChangedToSocialService"
-              type="number"
-              [disabled]="!punishment.fine.fineToSocialService"
-            /><span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">na</span>
-          </label>
           <input
             name="totalMonths"
             type="number"
@@ -131,7 +140,7 @@
           <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">godzin</span>
         </div>
 
-        <button class="btn btn-primary btn-dark">Oblicz</button>
+        <button class="btn btn-primary btn-dark my-4">Oblicz</button>
       </form>
     </div>
   </div>
@@ -258,5 +267,6 @@
         Wymiar zastępczej kary pozbawienia wolności: {{ punishment.results.main }} dni
       </li>
     </ul>
+    <button class="btn btn-dark btn-secondary" (click)="clearForms()">Wyczyść formularz</button>
   </div>
 </div>

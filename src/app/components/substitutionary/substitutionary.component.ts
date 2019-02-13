@@ -108,6 +108,24 @@ export class SubstitutionaryComponent implements OnInit {
     this.punishment.results.show = true;
   }
 
+  clearForms() {
+    // this.punishment.socialService.totalYears = 0;
+    this.punishment.socialService.totalYears = 0;
+    this.punishment.socialService.totalMonths = 0;
+    this.punishment.socialService.countedDays = 0;
+    this.punishment.socialService.doneHours = 0;
+    this.punishment.fine.countedRates = 0;
+    this.punishment.fine.fineChangedToSocialService = 0;
+    this.punishment.fine.fineToSocialService = false;
+    this.punishment.fine.paid = 0;
+    this.punishment.fine.rates = 0;
+    this.punishment.results.main = null;
+    this.punishment.results.show = false;
+    this.punishment.results.punishmentLeftDays = 0;
+    this.punishment.results.workedFine = 0;
+    this.punishment.results.undoneHours = 0;
+    this.punishment.results.totalHours = 0;
+  }
   test() {
     console.log(document.querySelectorAll('input[type="radio"'));
   }

@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SubstitutionaryComponent } from './components/substitutionary/substitutionary.component';
 import { FormsModule } from '@angular/forms';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SubstitutionaryComponent],
+  declarations: [AppComponent, NavbarComponent, SubstitutionaryComponent, MainComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

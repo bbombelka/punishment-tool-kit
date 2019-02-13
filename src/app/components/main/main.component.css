@@ -1,0 +1,45 @@
+h1 {
+  display: inline-block;
+  position: relative;
+  font-size: 40px;
+  font-weight: 500;
+  font-family: monospace;
+  /* letter-spacing: 0.1em; */
+  text-align: center;
+  margin: 50px auto;
+  overflow: hidden;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  padding: 0;
+  height: 60px;
+  width: 100%;
+  background-color: white;
+  top: 0;
+  left: 0%;
+  animation: cursor 0.8s linear infinite, letters 5s 5s steps(30, start) forwards;
+}
+
+@keyframes letters {
+  0% {
+    top: 0;
+    left: 0%;
+  }
+
+  100% {
+    top: 0;
+    left: 100%;
+  }
+}
+
+@keyframes cursor {
+  0% {
+    border-left: 5px solid black;
+  }
+
+  100% {
+    border-left: 5px solid transparent;
+  }
+}
