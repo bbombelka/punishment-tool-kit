@@ -1,0 +1,212 @@
+<div class="card mx-3">
+  <div class="card-header">
+    <h4 class="card-body card-title m-1 p-1">Rozkładanie należności sądowych na raty</h4>
+  </div>
+
+  <div class="card-body">
+    <form class="form-group" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="form-group-item text-dark">
+        <label for="fine"
+          >Kwota kary grzywny<label style="width: 10%" class="radio"
+            ><input
+              #radioFine
+              type="radio"
+              name="installmentType"
+              value="fine"
+              [(ngModel)]="installmentType"
+              required
+              [ngClass]="radioFine.checked || radioFee.checked ? null : 'invalid'"
+          /></label>
+        </label>
+        <input
+          [disabled]="installmentType === 'fee'"
+          type="number"
+          name="fine"
+          id="fine"
+          min="0"
+          ngModel
+          #fine="ngModel"
+        />
+        zł
+        <label class="pl-4"
+          >Świadczenia pieniężnego
+          <label style="width: 10%" class="radio"
+            ><input
+              #radioFee
+              type="radio"
+              name="installmentType"
+              value="fee"
+              [(ngModel)]="installmentType"
+              [ngClass]="radioFine.checked || radioFee.checked ? null : 'invalid'"
+              required/></label
+        ></label>
+        <input
+          [disabled]="installmentType === 'fine'"
+          type="number"
+          name="fee"
+          id="fee"
+          min="0"
+          ngModel
+          #fee="ngModel"
+        />
+        zł
+      </div>
+      <div class="form-group-item mb-4">
+        <label for="courtCharge"> Kwota kosztów sądowych : </label>
+        <input
+          [disabled]="installmentType === 'fee'"
+          type="number"
+          name="courtCharge"
+          min="0"
+          id="courtCharge"
+          ngModel
+          #courtCharge="ngModel"
+        />
+        zł
+      </div>
+      Sposób obliczenia:
+      <div class="btn-group btn-group-toggle ml-4" data-toggle="buttons">
+        <label
+          style="width: 100%"
+          (click)="toggleInstallmentSplitType = true"
+          class="btn btn-secondary active"
+        >
+          <input type="radio" name="options" id="option1" autocomplete="off" checked />
+          Wysokość raty
+        </label>
+        <label
+          style="width: 100%"
+          (click)="toggleInstallmentSplitType = false"
+          class="btn btn-secondary"
+        >
+          <input type="radio" name="options" id="option2" autocomplete="off" />
+          Liczba rat
+        </label>
+      </div>
+
+      <div
+        [hidden]="toggleInstallmentSplitType"
+        class="card card-body bg-light"
+        ngModelGroup="installmentNumber"
+        #installmentNumberGroup="ngModelGroup"
+      >
+        <div class="form-group-item">
+          <label for="installmentNumber">Liczba rat: </label>
+          <input
+            type="number"
+            name="installmentNumber"
+            id="installmentNumber"
+            required
+            min="2"
+            max="36"
+            #number="ngModel"
+            ngModel="2"
+            (change)="validate(number)"
+          />
+        </div>
+        <div class="form-group-item">
+          <label for="firstInstallment">Wysokośc pierwszej raty: </label>
+          <input
+            [disabled]="!toggleFirstInstallmentHeight"
+            type="number"
+            name="firstInstallment"
+            id="firstInstallment"
+            min="10"
+            ngModel
+            #firstInstallment="ngModel"
+          />
+          zł
+          <input
+            class="checkbox"
+            type="checkbox"
+            name="checkbox"
+            [(ngModel)]="toggleFirstInstallmentHeight"
+          />
+        </div>
+      </div>
+
+      <div
+        [hidden]="!toggleInstallmentSplitType"
+        class="card card-body bg-light"
+        ngModelGroup="installmentHeight"
+        #installmentHeightGroup="ngModelGroup"
+      >
+        <div class="form-group-item">
+          <label for="installmentHeight">Wysokość raty: </label>
+          <input
+            type="number"
+            name="installmentHeight"
+            id="installmentHeight"
+            min="10"
+            required
+            ngModel="0"
+            #installmentHeight="ngModel"
+          />
+          zł
+        </div>
+        <div class="form-group-item">
+          <label for="firstInstallmentInHeightGroup">Wysokość pierwszej raty: </label>
+          <input
+            [disabled]="!toggleFirstInstallmentHeight"
+            type="number"
+            name="firstInstallmentInHeightGroup"
+            id="firstInstallmentInHeightGroup"
+            min="10"
+            required
+            ngModel
+          />
+          zł
+          <input
+            class="checkbox"
+            type="checkbox"
+            name="checkbox"
+            [(ngModel)]="toggleFirstInstallmentHeight"
+          />
+        </div>
+      </div>
+      <button
+        [disabled]="
+          (!((fine.dirty || courtCharge.dirty || fee.dirty) && number.dirty) &&
+            !toggleInstallmentSplitType) ||
+          (!((fine.dirty || courtCharge.dirty || fee.dirty) && installmentHeight.dirty) &&
+            toggleInstallmentSplitType) ||
+          installmentType === null
+        "
+        class="mt-3 btn btn-dark"
+      >
+        Oblicz raty
+      </button>
+      <button (click)="showResults = false" (click)="clearValues()" class=" mt-3 ml-3 btn btn-dark">
+        Wyczyść wyniki
+      </button>
+      <button
+        (click)="showResults = false"
+        (click)="clearValuesForm()"
+        class=" mt-3 ml-3 btn btn-dark"
+      >
+        Wyczyść formularz
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="showResults" class="card mx-3">
+    <div class="card card-header"><h4 class="card-title p-0 m-0">Wyniki</h4></div>
+    <div class="card-body">
+      <ul class="list-group no-style">
+        <div *ngIf="!data.error">
+          <li *ngIf="data.firstInstallmentHeight" class="list-group-item-dark">
+            Pierwsza rata wynosi {{ data.firstInstallmentHeight }} zł /
+          </li>
+          <li *ngIf="data.lastInstallmentHeight" class="list-group-item-dark">
+            Ostatnia/druga rata wynosi {{ data.lastInstallmentHeight }} zł
+          </li>
+          <li class="list-group-item-dark">
+            Wysokość pozostałych rat wynosi {{ data.installmentHeight }} zł
+          </li>
+          <li class="list-group-item-dark">Całkowita liczba rat {{ data.installmentNumber }}</li>
+        </div>
+        <li *ngIf="data.error" class="list-group-item-dark">{{ data.error }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

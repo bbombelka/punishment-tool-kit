@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,IADA,CACA,KAAK,CAAC;EACF,KAAK,EAAE,GAAG;CAAG;;AAErB,AAAA,KAAK,CAAA,AAAA,IAAC,CAAK,OAAO,AAAZ,EAAc;EACjB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CAAG;;AAElB,AAAA,KAAK,CAAC;EACF,KAAK,EAAE,IAAI;CAAG;;AAClB,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,IAAI;CAAG",
+    "sources": [
+        "../src/app/components/installments/installments.component.sass"
+    ],
+    "names": [],
+    "file": "installments.component.css"
+}

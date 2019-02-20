@@ -42,7 +42,6 @@ export class SubstitutionaryComponent implements OnInit {
     let { fineToSocialService } = this.punishment.fine;
     fineToSocialService = !fineToSocialService;
     if (fineToSocialService) {
-      console.log('tak');
       const { rates, rateHeight, paid, countedRates } = this.punishment.fine;
       this.punishment.fine.fineChangedToSocialService =
         rates * rateHeight - countedRates * rateHeight - paid;
@@ -82,13 +81,9 @@ export class SubstitutionaryComponent implements OnInit {
 
   onSubmitFine({ value }) {
     if (this.punishment.fine.fineToSocialService) {
-      console.log(value);
       const { rates, rateHeight, paid, totalMonths, monthlyRate, doneHours, countedRates } = value;
       const { fineChangedToSocialService } = value;
 
-      // if (fineChangedToSocialService === 0) {
-      //   fineChangedToSocialService = rates * rateHeight - countedRates * rateHeight - paid;
-      // }
       this.punishment.results.main = Math.floor(
         (rates * rateHeight -
           countedRates * rateHeight -
@@ -125,9 +120,6 @@ export class SubstitutionaryComponent implements OnInit {
     this.punishment.results.workedFine = 0;
     this.punishment.results.undoneHours = 0;
     this.punishment.results.totalHours = 0;
-  }
-  test() {
-    console.log(document.querySelectorAll('input[type="radio"'));
   }
 }
 

@@ -1,1 +1,29 @@
-/* No CSS *//*# sourceMappingURL=substitutionary.component.css.map */
+#punishmentForm div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+#punishmentForm label {
+  width: 45%;
+}
+
+#punishmentForm input {
+  width: 75px;
+  margin: 0 10px;
+}
+
+.disabled {
+  text-decoration: line-through;
+}
+
+.checkbox {
+  height: 20px;
+}
+/*# sourceMappingURL=substitutionary.component.css.map */

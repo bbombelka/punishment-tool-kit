@@ -1,0 +1,17 @@
+form label {
+  width: 25%;
+}
+
+input[type="radio"] {
+  width: 20px;
+  margin: 10px;
+}
+
+input {
+  width: 75px;
+}
+
+.checkbox {
+  width: 50px;
+}
+/*# sourceMappingURL=installments.component.css.map */

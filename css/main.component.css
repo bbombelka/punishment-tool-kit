@@ -1,0 +1,10 @@
+#main {
+  width: 60%;
+  height: 50vh;
+  border: 2px solid red;
+}
+
+#main div div {
+  margin: 75px;
+}
+/*# sourceMappingURL=main.component.css.map */

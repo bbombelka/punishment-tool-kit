@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "",
+    "mappings": "AAAA,AACI,eADW,CACX,GAAG,CAAC;EACA,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,UAAU;EAC3B,WAAW,EAAE,QAAQ;CAAG;;AAJhC,AAKI,eALW,CAKX,KAAK,CAAC;EACF,KAAK,EAAE,GAAG;CAAG;;AANrB,AAOI,eAPW,CAOX,KAAK,CAAC;EACF,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,MAAM;CAAG;;AAEzB,AAAA,SAAS,CAAC;EACN,eAAe,EAAE,YAAY;CAAG;;AACpC,AAAA,SAAS,CAAC;EAEN,MAAM,EAAE,IAAI;CAAG",
     "sources": [
         "../src/app/components/substitutionary/substitutionary.component.sass"
     ],
