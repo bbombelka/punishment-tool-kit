@@ -8,6 +8,7 @@ import { SubstitutionaryComponent } from './components/substitutionary/substitut
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './components/main/main.component';
 import { InstallmentsComponent } from './components/installments/installments.component';
+import { ExpiryComponent } from './components/expiry/expiry.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { InstallmentsComponent } from './components/installments/installments.co
     SubstitutionaryComponent,
     MainComponent,
     InstallmentsComponent,
+    ExpiryComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],

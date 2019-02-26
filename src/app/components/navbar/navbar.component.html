@@ -1,19 +1,23 @@
 <nav class="nav navbar-expand navbar-dark bg-dark mb-4">
   <div class="container d-flex justify-content-between">
     <div class="container">
-      <a routerLink="/" routerLinkActive="active"><i class="fas fa-balance-scale p-4"></i></a>
-      <a href="#" class="navbar-brand">Niezbędnik wykonawczy</a>
+      <a routerLink="/" routerLinkActive="active"><i class="fas fa-balance-scale"></i></a>
+      <a id="brand" href="#" class="navbar-brand font-weight-bold">Niezbędnik wykonawczy</a>
     </div>
-    <div class="container d-flex justify-content-end align-items-center" id="navigation">
-      <div class="container d-flex flex-column align-items-center">
-        <a routerLink="/subst" routerLinkActive="active"
-          ><i class="fas fa-bars mx-4" style="position: relative"
-            ><i class="fas fa-bars mx-4"></i></i></a
-        >Oblicz karę zastępczą
+
+    <div class=" d-flex justify-content-end align-items-center" id="navigation">
+      <div class=" d-flex flex-column align-items-center">
+        <a routerLink="/subst" routerLinkActive="active"><i class="fas fa-lock"></i></a>
       </div>
 
-      <div class="container d-flex flex-column align-items-center">
-        <a routerLink="installments"><i class="far fa-money-bill-alt mx-4"></i></a>Oblicz raty
+      <div class=" d-flex flex-column align-items-center">
+        <a routerLink="/installments"><i class="far fa-money-bill-alt"></i></a>
+      </div>
+      <div class=" d-flex flex-column align-items-center">
+        <a routerLink="/expiry"><i class="far fa-clock"></i></a>
+      </div>
+      <div class=" d-flex flex-column align-items-center">
+        <a routerLink="/"><i class="fas fa-coins"></i></a>
       </div>
     </div>
   </div>

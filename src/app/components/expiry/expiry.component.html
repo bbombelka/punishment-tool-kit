@@ -1,0 +1,60 @@
+<div class="card m-5">
+  <div class="card card-header"><h3>Obliczenie przedawnienia wykonania kary</h3></div>
+  <div class="card card-body">
+    <form [formGroup]="expiryForm" (ngSubmit)="onSubmit()" class="form-group">
+      <div class="form-group-item">
+        <label> Rodzaj orzeczonej kary </label>
+        <select formControlName="punishmentType">
+          <option value="fineOrSocialMinor">
+            Kara grzywny/Ograniczenia wolności - wykroczenie</option
+          >
+          <option value="fineOrSocialCriminal"> Kara grzywny/Ograniczenia wolności - karna</option>
+          <option value="punishmentUnderAndFive">
+            Kara pozbawienia wolności nie wyższa niż 5 lat</option
+          >
+          <option value="punishmentOverFive">Kara pozbawienia wolności wyższa niż 5 lat</option>
+        </select>
+      </div>
+      <div class="form-group-item">
+        <label>Prawomocność wyroku </label> <input type="date" formControlName="legalValid" />
+      </div>
+      <div class="form-group-item">
+        <label>
+          Zawieszono postępowanie wykonawcze, bo skazany skazany uchyla się od wykonania kary ?
+        </label>
+        <input type="checkbox" formControlName="isSuspended" />
+      </div>
+      <div class="form-group-item">
+        <label> Skazany był/jest pozbawiony wolności ? </label>
+        <input
+          type="checkbox"
+          formControlName="imprisoned"
+          (click)="!getImprisonedValue() ? addImprisonmentArray() : removeImprisonmentArray()"
+        />
+      </div>
+
+      <div *ngIf="prisonServed" formArrayName="prisonServed" class="card form-group-item">
+        <div class="card">
+          <h4 class=" card-title">Okresy odbytych kar</h4>
+          <button class="btn btn-dark" type="button" (click)="addImprisonment()">Dodaj</button>
+        </div>
+
+        <ol>
+          <li *ngFor="let imprisonment of prisonServed.controls; let i = index" [formGroupName]="i">
+            <div class="card form-group-item">
+              <div class="form-group-item">
+                <label> Początek odbywania kary </label>
+                <input type="date" formControlName="from" /><label> Koniec odbywania kary </label>
+                <input type="date" formControlName="to" />
+                <button class="btn btn-secondary btn-sm" (click)="removeImprisonment(i)">
+                  x
+                </button>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <input type="submit" value="submit" class="btn btn-dark" />
+    </form>
+  </div>
+</div>
