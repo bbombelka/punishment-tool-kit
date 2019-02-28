@@ -1,9 +1,12 @@
-<div class="card card-body m-5">
-  <h3 class="card-body card-title">
-    Obliczenie kary zastępczej pozbawienia wolności za niewykonaną karę ograniczenia wolności oraz
-    niewykonaną karę grzywny
-  </h3>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+<div class="card mx-5">
+  <div class="card-header">
+    <h4 class="card-body card-title m-1 p-1">
+      Obliczenie kary zastępczej pozbawienia wolności za niewykonaną karę ograniczenia wolności oraz
+      niewykonaną karę grzywny
+    </h4>
+  </div>
+
+  <div class="btn-group btn-group-toggle m-3" data-toggle="buttons">
     <label
       (click)="!punishment.selectedSocial ? clearForms() : null; punishment.selectedSocial = true"
       class="btn btn-secondary active"
