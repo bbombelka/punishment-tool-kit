@@ -90,17 +90,17 @@
           />
           stawek
         </div>
-        <div class="form-group-item">
-          <label for="fineToSocialService">Zamieniono na pracę społecznie użyteczną ? </label>
-          <input
-            type="checkbox"
-            id="fineToSocialService"
-            name="fineToSocialService"
-            class="checkbox"
-            [(ngModel)]="punishment.fine.fineToSocialService"
-            [disabled]="rates.value > 120 ? true : false"
-            (click)="enableSocialServiceForm()"
-          />
+
+        <div (click)="enableSocialServiceForm()" class="btn-group" data-toggle="buttons">
+          Zamieniono na pracę społecznie użyteczną ?
+          <label
+            [hidden]="rates.value > 120 ? true : false"
+            class="btn btn-secondary btn-sm active mx-2"
+            style="width: 30px"
+          >
+            <span class="checkBoxAllow  fas fa-check"></span>
+            <span class="nonCheckBoxAllow fas fa-times"></span>
+          </label>
         </div>
         <div class="form-group-item">
           <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">Kwotę</span>

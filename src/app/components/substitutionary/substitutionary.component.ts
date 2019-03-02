@@ -39,9 +39,8 @@ export class SubstitutionaryComponent implements OnInit {
   ngOnInit() {}
 
   enableSocialServiceForm() {
-    let { fineToSocialService } = this.punishment.fine;
-    fineToSocialService = !fineToSocialService;
-    if (fineToSocialService) {
+    this.punishment.fine.fineToSocialService = !this.punishment.fine.fineToSocialService;
+    if (this.punishment.fine.fineToSocialService) {
       const { rates, rateHeight, paid, countedRates } = this.punishment.fine;
       this.punishment.fine.fineChangedToSocialService =
         rates * rateHeight - countedRates * rateHeight - paid;
@@ -122,7 +121,3 @@ export class SubstitutionaryComponent implements OnInit {
     this.punishment.results.totalHours = 0;
   }
 }
-
-// czyszczenie form przy zmianie kow na kg!
-// osobny przycisk do czyszczenia form!!!!
-// wylaczyc mozliwosc submita jesli jest wpisana wartość do  fineChangedToSocialService

@@ -7,16 +7,17 @@
     <form class="form-group" #f="ngForm" (ngSubmit)="onSubmit(f)">
       <div class="form-group-item text-dark">
         <label for="fine"
-          >Kwota kary grzywny<label style="width: 10%" class="radio"
+          >Kwota kary grzywny<label class="customradio"
             ><input
               #radioFine
               type="radio"
               name="installmentType"
               value="fine"
               [(ngModel)]="installmentType"
-              required
-              [ngClass]="radioFine.checked || radioFee.checked ? null : 'invalid'"
-          /></label>
+              [ngClass]="radioFine.checked || radioFee.checked ? null : 'invalid'"/><span
+              class="checkmark"
+            ></span
+          ></label>
         </label>
         <input
           [disabled]="installmentType === 'fee'"
@@ -28,9 +29,9 @@
           #fine="ngModel"
         />
         zł
-        <label class="pl-4"
-          >Świadczenia pieniężnego
-          <label style="width: 10%" class="radio"
+        <span style="padding-left: 50px">Świadczenia pieniężnego</span>
+        <label class="pl-4">
+          <label class="customradio"
             ><input
               #radioFee
               type="radio"
@@ -38,7 +39,7 @@
               value="fee"
               [(ngModel)]="installmentType"
               [ngClass]="radioFine.checked || radioFee.checked ? null : 'invalid'"
-              required/></label
+              required/><span class="checkmark"></span></label
         ></label>
         <input
           [disabled]="installmentType === 'fine'"
@@ -48,6 +49,7 @@
           min="0"
           ngModel
           #fee="ngModel"
+          style="margin-left: -100px"
         />
         zł
       </div>
@@ -104,11 +106,11 @@
             (change)="validate(number)"
           />
         </div>
-        <div class="alert alert-warning" role="alert">
+        <div *ngIf="feeAlert" class="alert alert-warning" role="alert">
           Okres rozłożenia na raty świadczenia pieniężnego nie może przekroczyć 1 roku (art 206. § 3
           pkt 2 K.k.w )
         </div>
-        <div class="alert alert-warning" role="alert">
+        <div *ngIf="fineAlert" class="alert alert-warning" role="alert">
           Okres rozłożenia płatności grzywny i kosztów sądowych na raty nie może przekroczyć 3 lat (
           art. 49. § 2 K.k.w)
         </div>
@@ -124,12 +126,16 @@
             #firstInstallment="ngModel"
           />
           zł
-          <input
-            class="checkbox"
-            type="checkbox"
-            name="checkbox"
-            [(ngModel)]="toggleFirstInstallmentHeight"
-          />
+          <div class="btn-group" data-toggle="buttons">
+            <label
+              (click)="toggleFirstInstallmentHeight = !toggleFirstInstallmentHeight"
+              class="btn btn-secondary btn-sm active mx-2"
+              style="width: 30px"
+            >
+              <span class="checkBoxAllow  fas fa-check"></span>
+              <span class="nonCheckBoxAllow fas fa-times"></span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -164,12 +170,22 @@
             ngModel
           />
           zł
-          <input
+          <!-- <input
             class="checkbox"
             type="checkbox"
             name="checkbox"
             [(ngModel)]="toggleFirstInstallmentHeight"
-          />
+          /> -->
+          <div class="btn-group" data-toggle="buttons">
+            <label
+              (click)="toggleFirstInstallmentHeight = !toggleFirstInstallmentHeight"
+              class="btn btn-secondary btn-sm active mx-2"
+              style="width: 30px"
+            >
+              <span class="checkBoxAllow  fas fa-check"></span>
+              <span class="nonCheckBoxAllow fas fa-times"></span>
+            </label>
+          </div>
         </div>
       </div>
       <button

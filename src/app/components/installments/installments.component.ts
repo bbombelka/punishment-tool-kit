@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-installments',
   templateUrl: './installments.component.html',
-  styleUrls: ['./installments.component.sass'],
+  styleUrls: ['./installments.component.sass', './installments.component.css'],
 })
 export class InstallmentsComponent implements OnInit {
   toggleInstallmentSplitType = true;
@@ -21,7 +21,8 @@ export class InstallmentsComponent implements OnInit {
     error: null,
   };
   test = 0;
-
+  feeAlert = false;
+  fineAlert = false;
   constructor() {}
 
   ngOnInit() {}
@@ -112,9 +113,12 @@ export class InstallmentsComponent implements OnInit {
     switch (input.name) {
       case 'installmentNumber': {
         if ((input.value < 2 || input.value > 36) && this.installmentType === 'fine') {
-          console.log('false');
+          this.fineAlert = true;
         } else if ((input.value < 2 || input.value > 12) && this.installmentType === 'fee') {
-          console.log('false fee');
+          this.feeAlert = true;
+        } else {
+          this.feeAlert = false;
+          this.fineAlert = false;
         }
       }
     }
