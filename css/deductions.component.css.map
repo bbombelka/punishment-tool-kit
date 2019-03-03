@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,GADD,AAAA,YAAY,CACX,CAAC,CAAC;EACE,OAAO,EAAE,EAAE;EACX,MAAM,EAAE,OAAO;EACf,UAAU,EAAE,GAAG;EACf,SAAS,EAAE,KAAK;CAGoB;;AAR5C,AAMQ,GANL,AAAA,YAAY,CACX,CAAC,AAKI,MAAM,CAAC;EACJ,OAAO,EAAE,CAAC;EACV,SAAS,EAAE,gBAAgB;CAAG",
+    "sources": [
+        "../src/app/components/deductions/deductions.component.sass"
+    ],
+    "names": [],
+    "file": "deductions.component.css"
+}

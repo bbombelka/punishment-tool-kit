@@ -1,3 +1,5 @@
+$transition: .4s
+
 #main
     width: 60%
     min-height: 70vh
@@ -8,12 +10,31 @@
             flex-basis: 150px 
             margin: 20px 75px
             font-size: 1.1em
+            transition: $transition
             
+            
+            &:hover
+                border-bottom: 2px solid grey
+            &:hover > a > i
+                transform: scale(1.2)
+                color: black
+                opacity: 1    
             a
                 font-size: 5em
             h6
                 text-align-last: center
                 padding-top: 0.5em
-    
+                position: relative      
+               
 i
-    color: black
+    color: #343a40
+    transition: $transition
+    opacity: .75
+    overflow: hidden
+    // &:hover
+    //     transform: scale(1.2)
+    //     color: black
+    //     opacity: 1
+
+
+           

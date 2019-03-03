@@ -1,9 +1,10 @@
 <div class="card mx-5">
   <div class="card-header">
-    <h4 class="card-body card-title m-1 p-1">
+    <h4 class="card-title m-1 p-1 d-inline-block">
       Obliczenie kary zastępczej pozbawienia wolności za niewykonaną karę ograniczenia wolności oraz
       niewykonaną karę grzywny
     </h4>
+    <i (click)="goBack()" class="far fa-arrow-alt-circle-right float-right m-2"></i>
   </div>
 
   <div class="btn-group btn-group-toggle m-3" data-toggle="buttons">
@@ -91,18 +92,25 @@
           stawek
         </div>
 
-        <div (click)="enableSocialServiceForm()" class="btn-group" data-toggle="buttons">
+        <div class="btn-group" data-toggle="buttons">
           Zamieniono na pracę społecznie użyteczną ?
           <label
+            (click)="enableSocialServiceForm()"
             [hidden]="rates.value > 120 ? true : false"
             class="btn btn-secondary btn-sm active mx-2"
             style="width: 30px"
           >
-            <span class="checkBoxAllow  fas fa-check"></span>
-            <span class="nonCheckBoxAllow fas fa-times"></span>
+            <span
+              class="fas fa-check"
+              [ngClass]="punishment.fine.fineToSocialService ? 'd-inline' : 'd-none'"
+            ></span>
+            <span
+              class="fas fa-times"
+              [ngClass]="punishment.fine.fineToSocialService ? 'd-none' : 'd-inline'"
+            ></span>
           </label>
         </div>
-        <div class="form-group-item">
+        <div class="form-group-item mt-3">
           <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">Kwotę</span>
           <input
             [(ngModel)]="punishment.fine.fineChangedToSocialService"
@@ -143,7 +151,7 @@
           <span [ngClass]="!punishment.fine.fineToSocialService ? 'disabled' : null">godzin</span>
         </div>
 
-        <button class="btn btn-primary btn-dark my-4">Oblicz</button>
+        <button class="btn btn-primary btn-dark m-3">Oblicz</button>
       </form>
     </div>
   </div>
@@ -228,7 +236,7 @@
             max="720"
           />
         </div>
-        <button class="btn btn-primary btn-dark">Oblicz</button>
+        <button class="btn btn-primary btn-dark m-3">Oblicz</button>
       </form>
     </div>
   </div>

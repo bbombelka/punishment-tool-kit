@@ -13,6 +13,19 @@
       flex-basis: 150px;
   margin: 20px 75px;
   font-size: 1.1em;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+#main div div:hover {
+  border-bottom: 2px solid grey;
+}
+
+#main div div:hover > a > i {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  color: black;
+  opacity: 1;
 }
 
 #main div div a {
@@ -22,5 +35,14 @@
 #main div div h6 {
   text-align-last: center;
   padding-top: 0.5em;
+  position: relative;
+}
+
+i {
+  color: #343a40;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  opacity: .75;
+  overflow: hidden;
 }
 /*# sourceMappingURL=main.component.css.map */

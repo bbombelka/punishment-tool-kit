@@ -1,6 +1,9 @@
 <div class="card mx-5">
   <div class="card-header">
-    <h4 class="card-body card-title m-1 p-1">Rozkładanie należności sądowych na raty</h4>
+    <h4 class="card-body card-title m-1 p-1 d-inline-block">
+      Rozkładanie należności sądowych na raty
+    </h4>
+    <i (click)="goBack()" class="far fa-arrow-alt-circle-right float-right m-2"></i>
   </div>
 
   <div class="card-body">
@@ -132,8 +135,14 @@
               class="btn btn-secondary btn-sm active mx-2"
               style="width: 30px"
             >
-              <span class="checkBoxAllow  fas fa-check"></span>
-              <span class="nonCheckBoxAllow fas fa-times"></span>
+              <span
+                class="fas fa-check"
+                [ngClass]="toggleFirstInstallmentHeight ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="toggleFirstInstallmentHeight ? 'd-none' : 'd-inline'"
+              ></span>
             </label>
           </div>
         </div>
@@ -182,8 +191,14 @@
               class="btn btn-secondary btn-sm active mx-2"
               style="width: 30px"
             >
-              <span class="checkBoxAllow  fas fa-check"></span>
-              <span class="nonCheckBoxAllow fas fa-times"></span>
+              <span
+                class="fas fa-check"
+                [ngClass]="toggleFirstInstallmentHeight ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="toggleFirstInstallmentHeight ? 'd-none' : 'd-inline'"
+              ></span>
             </label>
           </div>
         </div>

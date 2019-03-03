@@ -1,13 +1,14 @@
 <div class="card mx-5">
   <div class="card-header">
-    <h4 class="card-body card-title m-1 p-1">Obliczenie przedawnienia wykonania kary</h4>
+    <h4 class="card-title m-1 p-1 d-inline-block">Obliczenie przedawnienia wykonania kary</h4>
+    <i (click)="goBack()" class="far fa-arrow-alt-circle-right float-right m-2"></i>
   </div>
 
-  <div class="card card-body">
+  <div class="card-body">
     <form class="form-group" [formGroup]="expiryForm" (ngSubmit)="onSubmit()" (change)="onChange()">
-      <div class="form-group-item">
+      <div class="form-group-item form-inline mb-3">
         <label> Rodzaj orzeczonej kary </label>
-        <select formControlName="punishmentType">
+        <select class="form-control-sm ml-3" formControlName="punishmentType">
           <option value="fineOrSocialMinor">
             Kara grzywny/Ograniczenia wolności - wykroczenie</option
           >
@@ -19,98 +20,127 @@
         </select>
       </div>
 
-      <div class="form-group-item">
+      <div class="form-group-item form-inline mb-3">
         <label>Prawomocność wyroku </label>
-        <input type="date" formControlName="legalValid" />
+        <input class="form-control-sm ml-3" type="date" formControlName="legalValid" />
       </div>
-      <div class="form-group-item">
-        <label>
-          Zawieszono postępowanie wykonawcze, bo skazany skazany uchyla się od wykonania kary ?
+      <div class="btn-group" data-toggle="buttons">
+        Zawieszono postępowanie wykonawcze, bo skazany skazany uchyla się od wykonania kary ?
+        <label
+          (click)="toggle('isSuspended')"
+          class="btn btn-secondary btn-sm active mx-2"
+          style="width: 30px"
+        >
+          <span class="fas fa-check" [ngClass]="isSuspended ? 'd-inline' : 'd-none'"></span>
+          <span class="fas fa-times" [ngClass]="isSuspended ? 'd-none' : 'd-inline'"></span>
         </label>
-        <input type="checkbox" formControlName="isSuspended" />
       </div>
-      <div class="form-group-item">
-        <label> Skazany był/jest pozbawiony wolności ? </label>
-        <input
-          type="checkbox"
-          formControlName="imprisoned"
-          (click)="!getImprisonedValue() ? addImprisonmentArray() : removeImprisonmentArray()"
-        />
+      <div class="btn-group d-block" data-toggle="buttons">
+        Skazany był/jest pozbawiony wolności ?
+        <label
+          (click)="
+            toggle('imprisoned'); imprisoned ? addImprisonmentArray() : removeImprisonmentArray()
+          "
+          class="btn btn-secondary btn-sm active mx-2"
+          style="width: 30px"
+        >
+          <span class="fas fa-check" [ngClass]="imprisoned ? 'd-inline' : 'd-none'"></span>
+          <span class="fas fa-times" [ngClass]="imprisoned ? 'd-none' : 'd-inline'"></span>
+        </label>
       </div>
 
-      <div
-        *ngIf="prisonServed"
-        formArrayName="prisonServed"
-        class="form-group-item card card-body bg-light"
-      >
-        Okresy odbytych kar
-        <button class="btn btn-dark btn-sm" type="button" (click)="addImprisonment()">
-          Dodaj
-        </button>
+      <div *ngIf="prisonServed" formArrayName="prisonServed" class="card bg-light">
+        <div class="card-header">
+          <h5 class="card-title d-inline">Okresy odbytych kar</h5>
+          <button (click)="cancelImprisonment()" class="btn btn-secondary btn-sm float-right mx-2">
+            Anuluj
+          </button>
+          <button
+            class="btn btn-secondary btn-sm float-right"
+            type="button"
+            (click)="addImprisonment()"
+          >
+            Dodaj kolejny okres
+          </button>
+        </div>
+
         <ol>
           <li
-            class="border border-white rounded p-3"
+            class="m-4"
             *ngFor="let imprisonment of prisonServed.controls; let i = index"
             [formGroupName]="i"
           >
-            <div class="form-group-item">
-              <label> Początek odbywania kary </label>
-              <input
-                class="form-control"
-                [ngClass]="
-                  expiryForm.controls.prisonServed.controls[i].controls.from.errors?.legal ||
-                  expiryForm.controls.prisonServed.controls[i].errors?.dates
-                    ? 'red'
-                    : null
-                "
-                type="date"
-                formControlName="from"
-              />
-              <div class="invalid-feedback">
-                {{ expiryForm.controls.prisonServed.controls[i].controls.from.errors?.legal }}
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label> Początek odbywania kary </label>
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    imprisonment.controls.from.errors?.legal || imprisonment.errors?.dates
+                      ? 'is-invalid'
+                      : null
+                  "
+                  type="date"
+                  formControlName="from"
+                />
+                <div *ngIf="imprisonment.controls.from.errors?.legal" class="invalid-feedback">
+                  {{ imprisonment.controls.from.errors?.legal }}
+                </div>
               </div>
-              <label> Koniec odbywania kary </label>
-              <input
-                class="form-control"
-                [ngClass]="
-                  expiryForm.controls.prisonServed.controls[i].errors?.dates ? 'red' : null
-                "
-                type="date"
-                formControlName="to"
-              />
+              <div class="form-group col-md-6">
+                <label> Koniec odbywania kary </label>
+                <input
+                  class="form-control"
+                  [ngClass]="imprisonment.errors?.dates ? 'is-invalid' : null"
+                  type="date"
+                  formControlName="to"
+                />
+              </div>
             </div>
-            <button (click)="removeImprisonment(i)">x</button>
-            <div
-              [hidden]="!expiryForm.controls.prisonServed.controls[i].errors?.dates"
-              class="invalid-feedback"
-            >
-              {{ expiryForm.controls.prisonServed.controls[i].errors?.dates }}
+
+            <button class="btn btn-secondary btn-sm" (click)="removeImprisonment(i)">
+              Usuń ten okres
+            </button>
+            <hr />
+            <div *ngIf="imprisonment.errors?.dates" class="alert alert-danger">
+              {{ imprisonment.errors?.dates }}
             </div>
           </li>
         </ol>
+        <div class="btn-group"></div>
       </div>
-      <input [disabled]="expiryForm.invalid" type="submit" value="Oblicz przedawnienie" />
-      <button type="button" (click)="clearForm()">Wyczyśc wszystko</button>
+      <div class="form-group mt-4">
+        <input
+          class="btn btn-default btn-primary btn-dark"
+          [disabled]="expiryForm.invalid"
+          type="submit"
+          value="Oblicz przedawnienie"
+        />
+        <button class="btn btn-primary btn-dark mx-3" type="button" (click)="clearForm()">
+          Wyczyść wszystko
+        </button>
+      </div>
     </form>
 
     <div *ngIf="submitted && expiryForm.status === 'VALID'" class="card card-body">
-      <h3 class="card-title">Wyniki</h3>
-      <h4>Przedawnienie wykonania kary upływa z dniem {{ result }}</h4>
+      <h6 class="mb-3">
+        Przedawnienie wykonania kary upływa z dniem <span id="result">{{ result }}</span>
+      </h6>
+
       <div
         *ngIf="expiryForm.value.imprisoned && expiryForm.controls.prisonServed?.status === 'VALID'"
       >
-        <h4>Okresy pobytu w zakładzie karnym</h4>
+        <h6 class="mb-3">Pobyty w zakładzie karnym</h6>
         <ul class="list group">
           <li
             *ngFor="let imprisonment of expiryForm.value.prisonServed; let i = index"
             class="list-group-item"
           >
-            Pobyt w okresie od {{ imprisonment.from }} do {{ imprisonment.to }} czyli łącznie
-            {{ imprisonment.totalDays }} dni
+            Pobyt w zakładzie karnym w okresie od {{ imprisonment.from }} do
+            {{ imprisonment.to }} czyli łącznie {{ imprisonment.totalDays }} dni
           </li>
         </ul>
       </div>
     </div>
-    <button (click)="test()">Test</button>
   </div>
 </div>

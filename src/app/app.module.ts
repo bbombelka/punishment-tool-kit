@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './components/main/main.component';
 import { InstallmentsComponent } from './components/installments/installments.component';
 import { ExpiryComponent } from './components/expiry/expiry.component';
+import { DeductionsComponent } from './components/deductions/deductions.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ExpiryComponent } from './components/expiry/expiry.component';
     MainComponent,
     InstallmentsComponent,
     ExpiryComponent,
+    DeductionsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],

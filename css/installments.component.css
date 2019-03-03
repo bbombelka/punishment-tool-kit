@@ -19,4 +19,34 @@ input {
 .invalid {
   outline: 3px solid red;
 }
+
+.btn.active span.nonCheckBoxAllow {
+  display: none;
+}
+
+.btn.active span.checkBoxAllow {
+  display: inline;
+}
+
+.btn span.nonCheckBoxAllow {
+  display: inline;
+}
+
+.btn span.checkBoxAllow {
+  display: none;
+}
+
+i {
+  opacity: .5;
+  cursor: pointer;
+  -webkit-transition: .5s;
+  transition: .5s;
+  font-size: 2.5em;
+}
+
+i:hover {
+  opacity: 1;
+  -webkit-transform: translatex(10px);
+          transform: translatex(10px);
+}
 /*# sourceMappingURL=installments.component.css.map */

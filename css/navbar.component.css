@@ -3,6 +3,13 @@ i {
   font-size: 2em;
   margin: 10px 0;
   padding: 2rem 1rem;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+i:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
 
 #navigation {
@@ -13,5 +20,9 @@ i {
 #brand {
   text-transform: uppercase;
   letter-spacing: 0.3em;
+}
+
+.active {
+  opacity: .5;
 }
 /*# sourceMappingURL=navbar.component.css.map */

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-substitutionary',
@@ -34,7 +35,7 @@ export class SubstitutionaryComponent implements OnInit {
     selectedSocial: true,
   };
 
-  constructor() {}
+  constructor(private location: Location) {}
 
   ngOnInit() {}
 
@@ -119,5 +120,9 @@ export class SubstitutionaryComponent implements OnInit {
     this.punishment.results.workedFine = 0;
     this.punishment.results.undoneHours = 0;
     this.punishment.results.totalHours = 0;
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

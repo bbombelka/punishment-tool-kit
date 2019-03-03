@@ -1,0 +1,14 @@
+div.card-header i {
+  opacity: .5;
+  cursor: pointer;
+  -webkit-transition: .5s;
+  transition: .5s;
+  font-size: 2.5em;
+}
+
+div.card-header i:hover {
+  opacity: 1;
+  -webkit-transform: translatex(10px);
+          transform: translatex(10px);
+}
+/*# sourceMappingURL=deductions.component.css.map */

@@ -4,6 +4,7 @@ import { SubstitutionaryComponent } from './components/substitutionary/substitut
 import { MainComponent } from './components/main/main.component';
 import { InstallmentsComponent } from './components/installments/installments.component';
 import { ExpiryComponent } from './components/expiry/expiry.component';
+import { DeductionsComponent } from './components/deductions/deductions.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
     path: 'subst',
     component: SubstitutionaryComponent,
   },
+  { path: 'deductions', component: DeductionsComponent },
 ];
 
 @NgModule({

@@ -24,6 +24,44 @@
 }
 
 .checkbox {
-  height: 20px;
+  width: 50px;
+}
+
+.invalid {
+  outline: 3px solid red;
+}
+
+.btn.active span.nonCheckBoxAllow {
+  display: inline;
+}
+
+.btn.active span.checkBoxAllow {
+  display: none;
+}
+
+.btn span.nonCheckBoxAllow {
+  display: none;
+}
+
+.btn span.checkBoxAllow {
+  display: inline;
+}
+
+i {
+  opacity: .5;
+  cursor: pointer;
+  -webkit-transition: .5s;
+  transition: .5s;
+  font-size: 2.5em;
+}
+
+i:hover {
+  opacity: 1;
+  -webkit-transform: translatex(10px);
+          transform: translatex(10px);
+}
+
+h4 {
+  width: 90%;
 }
 /*# sourceMappingURL=substitutionary.component.css.map */

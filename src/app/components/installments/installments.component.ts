@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Data } from '../../models/data';
 import { NgForm } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-installments',
@@ -23,7 +24,7 @@ export class InstallmentsComponent implements OnInit {
   test = 0;
   feeAlert = false;
   fineAlert = false;
-  constructor() {}
+  constructor(private location: Location) {}
 
   ngOnInit() {}
 
@@ -122,5 +123,9 @@ export class InstallmentsComponent implements OnInit {
         }
       }
     }
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

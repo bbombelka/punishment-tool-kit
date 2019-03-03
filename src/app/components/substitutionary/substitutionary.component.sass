@@ -19,16 +19,27 @@
     outline: 3px solid red
 
 .btn.active span.nonCheckBoxAllow 
-    display: none
+    display: inline
   
   
 .btn.active span.checkBoxAllow 
-    display: inline
+    display: none
   
   
 .btn span.nonCheckBoxAllow 
-    display: inline
+    display: none
   
   
 .btn span.checkBoxAllow 
-    display: none
+    display: inline
+
+i
+    opacity: .5
+    cursor: pointer
+    transition: .5s
+    font-size: 2.5em
+    &:hover
+        opacity: 1
+        transform: translatex(10px)
+h4 
+    width: 90%

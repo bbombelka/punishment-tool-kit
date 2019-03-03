@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray, ValidatorFn } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-expiry',
@@ -20,11 +21,15 @@ export class ExpiryComponent implements OnInit {
     return this.expiryForm.get('prisonServed') as FormArray;
   }
 
-  getImprisonedValue() {
+  get imprisoned() {
     return this.expiryForm.get('imprisoned').value;
   }
 
-  constructor(private fb: FormBuilder) {}
+  get isSuspended() {
+    return this.expiryForm.get('isSuspended').value;
+  }
+
+  constructor(private fb: FormBuilder, private location: Location) {}
 
   ngOnInit() {}
 
@@ -79,6 +84,7 @@ export class ExpiryComponent implements OnInit {
       if (from) {
         if (legalValid.value > from) {
           return {
+            // tslint:disable-next-line:max-line-length
             legal: `Jeżeli początek odbywanej kary przypada na dzień przed prawomocnością wyroku to wówczas za początek okresu przerywającego bieg przedawnienia należy przyjać datę prawomocności wyroku a więc ${
               legalValid.value
             }`,
@@ -97,7 +103,7 @@ export class ExpiryComponent implements OnInit {
       if (f.value && t.value) {
         if (f.value > t.value) {
           return {
-            dates: 'Data początku odbywanej kary nie może być późniejsza niż data jej rozpoczęcia',
+            dates: 'Data początku odbywanej kary nie może być późniejsza niż data jej rozpoczęcia.',
           };
         } else {
           return {};
@@ -137,7 +143,7 @@ export class ExpiryComponent implements OnInit {
     this.submitted = true;
   }
 
-  clearForm() {
+  clearForm(): void {
     this.expiryForm.reset();
     this.expiryForm.patchValue({
       punishmentType: ['fineOrSocialCriminal'],
@@ -147,9 +153,22 @@ export class ExpiryComponent implements OnInit {
 
     this.removeImprisonmentArray();
   }
-  onChange() {
+  onChange(): void {
     this.submitted = false;
     this.result = null;
+  }
+
+  toggle(control: string): void {
+    this.expiryForm.patchValue({ [control]: !this.expiryForm.controls[control].value });
+  }
+
+  cancelImprisonment(): void {
+    this.expiryForm.patchValue({ imprisoned: false });
+    this.removeImprisonmentArray();
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   test() {
