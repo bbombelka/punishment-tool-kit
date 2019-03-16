@@ -88,6 +88,7 @@ export class DeductionsComponent implements OnInit {
   }
 
   onSubmit = () => {
+    this.clearResults();
     this.calculcateDeductions(this.deductionForm.value);
     this.results.visible = true;
   };

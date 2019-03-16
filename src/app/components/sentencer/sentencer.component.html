@@ -1,0 +1,113 @@
+<div class="card mx-5">
+  <div class="card-header">
+    <h4 class="card-title m-1 p-1 d-inline-block">Wygeneruj wyrok</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="sentencer" class="form-group">
+      <div formGroupName="sentenceDetails" class="card">
+        <h5 class="card-title p-3">Szczegóły wyroku</h5>
+        <div class="form-row m-3">
+          <div class="col-4 btn-group" data-toggle="buttons">
+            <div>
+              <b>Zmieniono wyrok w II instancji ?</b>
+              <label
+                (click)="toggle('changed'); changeHandler(changed)"
+                class="btn btn-secondary btn-sm mx-2"
+                style="width: 30px"
+              >
+                <span class="fas fa-check" [ngClass]="changed ? 'd-inline' : 'd-none'"></span>
+                <span class="fas fa-times" [ngClass]="changed ? 'd-none' : 'd-inline'"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-4 btn-group" data-toggle="buttons">
+            <div>
+              <b>Wydano wyrok łączny?</b>
+              <label
+                (click)="toggle('combined')"
+                class="btn btn-secondary btn-sm mx-2"
+                style="width: 30px"
+              >
+                <span class="fas fa-check" [ngClass]="combined ? 'd-inline' : 'd-none'"></span>
+                <span class="fas fa-times" [ngClass]="combined ? 'd-none' : 'd-inline'"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div id="sentenceDetails" class="form-row m-3">
+          <div class="col-3">
+            <label for="court" class="p-1">Sąd wydający</label>
+            <select id="court" class="form-control">
+              <option value="sta">SR Tarnowskie Góry</option>
+              <option value="sy">SR Bytom</option>
+              <option value="sbe">SR Będzin</option>
+              <option value="sh">SR Chorzów</option>
+              <option value="slu">SR Lubliniec</option>
+              <option value="si">SR Siemianowice Śl</option>
+              <option value="skw">SR Katowice-Wschód</option>
+              <option value="skz">SR Katowice-Zachód</option>
+            </select>
+          </div>
+          <div class="col-2">
+            <label for="department" class="p-1">Numer wydziału</label>
+            <select id="department" class="form-control">
+              <option value="I">I</option>
+              <option value="II">II</option>
+              <option value="III">III</option>
+              <option value="IV">IV</option>
+              <option value="V">V</option>
+              <option value="VI">VI</option>
+              <option value="VII">VII</option>
+              <option value="VIII">VIII</option>
+              <option value="IX">IX</option>
+            </select>
+          </div>
+          <div class="col">
+            <label id="signature" class="p-1">Sygnatura (bez wydziału)</label>
+            <input id="signature" type="text" class="form-control" placeholder="123/19" />
+          </div>
+          <div class="col">
+            <label for="date" class="p-1">Data wydania</label>
+            <input id="date" type="text" class="form-control" placeholder="1 stycznia 2019 roku" />
+          </div>
+          <div class="col">
+            <label for="legalValid">Data prawomocności </label>
+            <input type="text" class="form-control" placeholder="1 stycznia 2019" />
+          </div>
+        </div>
+
+        <div *ngIf="changed" class="form-row m-3">
+          <div class="col-3">
+            <label for="courtSo" class="p-1">Sąd II instancji</label>
+            <select id="courtSo" class="form-control">
+              <option value="sgSo">SO Gliwice</option>
+              <option value="skSo">SO Katowice</option>
+              <option value="scSo">SO Częstochowa</option>
+            </select>
+          </div>
+          <div class="col-2">
+            <label for="departmentSo" class="p-1">Numer wydziału</label>
+            <select id="departmentSo" class="form-control">
+              <option value="VI">VI</option>
+              <option value="VII">VII</option>
+              <option value="XXIII">XXIII</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="signatureSo" class="p-1">Sygnatura wyroku (bez wydziału)</label>
+            <input id="signatureSo" type="text" class="form-control" placeholder="123/19" />
+          </div>
+          <div class="col">
+            <label for="dateSo" class="p-1">Data wydania wyroku</label>
+            <input
+              id="dateSo"
+              type="text"
+              class="form-control"
+              placeholder="1 stycznia 2019 roku"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { MainComponent } from './components/main/main.component';
 import { InstallmentsComponent } from './components/installments/installments.component';
 import { ExpiryComponent } from './components/expiry/expiry.component';
 import { DeductionsComponent } from './components/deductions/deductions.component';
+import { SentencerComponent } from './components/sentencer/sentencer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { DeductionsComponent } from './components/deductions/deductions.componen
     InstallmentsComponent,
     ExpiryComponent,
     DeductionsComponent,
+    SentencerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],

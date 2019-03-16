@@ -54,10 +54,10 @@
         type="submit"
         value="Przelicz"
       />
-      <button type="button" class="btn btn-default btn-secondary m-2" (click)="clearForm()">
+      <button type="button" class="btn btn-default btn-dark m-2" (click)="clearForm()">
         Wyczyść formularz
       </button>
-      <button type="button" class="btn btn-default btn-secondary m-2" (click)="clearResults()">
+      <button type="button" class="btn btn-default btn-dark m-2" (click)="clearResults()">
         Wyczyść wyniki
       </button>
     </form>
@@ -68,14 +68,16 @@
   <div class="card-body">
     <h4>Wyniki</h4>
     <ul class="list-group">
-      <li class="list-group-item">Liczba pozostałych miesięcy {{ results.fullMonthsLeft + 1 }}</li>
+      <li *ngIf="results.lastMonthDeductions" class="list-group-item">
+        Liczba pozostałych miesięcy {{ results.fullMonthsLeft + 1 }}
+      </li>
       <li class="list-group-item">
         Liczba pozostałych pełnych miesięcy {{ results.fullMonthsLeft }}
       </li>
       <li class="list-group-item">
         Procent potrącanego wynagrodzenia za pracę: {{ results.monthlyDeductions }} %
       </li>
-      <li class="list-group-item">
+      <li *ngIf="results.lastMonthDeductions" class="list-group-item">
         Procent potrącanego wynagrodzenia za pracę w ostatnim/pierwszym miesiącu:
         {{ results.lastMonthDeductions }} %
       </li>
