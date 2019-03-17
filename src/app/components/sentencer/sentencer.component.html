@@ -6,12 +6,14 @@
     <form [formGroup]="sentencer" class="form-group">
       <div formGroupName="sentenceDetails" class="card">
         <h5 class="card-title p-3">Szczegóły wyroku</h5>
-        <div class="form-row m-3">
+        <div class="form-row mx-3">
           <div class="col-4 btn-group" data-toggle="buttons">
             <div>
               <b>Zmieniono wyrok w II instancji ?</b>
               <label
-                (click)="toggle('changed'); changeHandler(changed)"
+                (click)="
+                  toggle('changed', 'sentenceDetails'); changeHandler(changed, 'sentenceChanged')
+                "
                 class="btn btn-secondary btn-sm mx-2"
                 style="width: 30px"
               >
@@ -24,7 +26,7 @@
             <div>
               <b>Wydano wyrok łączny?</b>
               <label
-                (click)="toggle('combined')"
+                (click)="toggle('combined', 'sentenceDetails')"
                 class="btn btn-secondary btn-sm mx-2"
                 style="width: 30px"
               >
@@ -34,10 +36,10 @@
             </div>
           </div>
         </div>
-        <div id="sentenceDetails" class="form-row m-3">
+        <div id="sentenceDetails" class="form-row m-3" formGroupName="details">
           <div class="col-3">
             <label for="court" class="p-1">Sąd wydający</label>
-            <select id="court" class="form-control">
+            <select id="court" class="form-control" formControlName="court">
               <option value="sta">SR Tarnowskie Góry</option>
               <option value="sy">SR Bytom</option>
               <option value="sbe">SR Będzin</option>
@@ -50,7 +52,7 @@
           </div>
           <div class="col-2">
             <label for="department" class="p-1">Numer wydziału</label>
-            <select id="department" class="form-control">
+            <select id="department" class="form-control" formControlName="depart">
               <option value="I">I</option>
               <option value="II">II</option>
               <option value="III">III</option>
@@ -63,23 +65,41 @@
             </select>
           </div>
           <div class="col">
-            <label id="signature" class="p-1">Sygnatura (bez wydziału)</label>
-            <input id="signature" type="text" class="form-control" placeholder="123/19" />
+            <label for="signature" class="p-1">Sygnatura (bez wydziału)</label>
+            <input
+              #signature
+              id="signature"
+              type="text"
+              class="form-control"
+              placeholder="123/19"
+              formControlName="sign"
+            />
           </div>
           <div class="col">
             <label for="date" class="p-1">Data wydania</label>
-            <input id="date" type="text" class="form-control" placeholder="1 stycznia 2019 roku" />
+            <input
+              id="date"
+              type="text"
+              class="form-control"
+              placeholder="1 stycznia 2019 "
+              formControlName="date"
+            />
           </div>
           <div class="col">
             <label for="legalValid">Data prawomocności </label>
-            <input type="text" class="form-control" placeholder="1 stycznia 2019" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="1 stycznia 2019"
+              formControlName="legalValid"
+            />
           </div>
         </div>
 
-        <div *ngIf="changed" class="form-row m-3">
+        <div *ngIf="changed" class="form-row m-3" formGroupName="detailsChangingSentence">
           <div class="col-3">
             <label for="courtSo" class="p-1">Sąd II instancji</label>
-            <select id="courtSo" class="form-control">
+            <select id="courtSo" class="form-control" formControlName="court">
               <option value="sgSo">SO Gliwice</option>
               <option value="skSo">SO Katowice</option>
               <option value="scSo">SO Częstochowa</option>
@@ -87,7 +107,7 @@
           </div>
           <div class="col-2">
             <label for="departmentSo" class="p-1">Numer wydziału</label>
-            <select id="departmentSo" class="form-control">
+            <select id="departmentSo" class="form-control" formControlName="depart">
               <option value="VI">VI</option>
               <option value="VII">VII</option>
               <option value="XXIII">XXIII</option>
@@ -95,7 +115,13 @@
           </div>
           <div class="col">
             <label for="signatureSo" class="p-1">Sygnatura wyroku (bez wydziału)</label>
-            <input id="signatureSo" type="text" class="form-control" placeholder="123/19" />
+            <input
+              id="signatureSo"
+              type="text"
+              class="form-control"
+              placeholder="123/19"
+              formControlName="sign"
+            />
           </div>
           <div class="col">
             <label for="dateSo" class="p-1">Data wydania wyroku</label>
@@ -103,8 +129,453 @@
               id="dateSo"
               type="text"
               class="form-control"
-              placeholder="1 stycznia 2019 roku"
+              placeholder="1 stycznia 2019 "
+              formControlName="date"
             />
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3" formGroupName="punishmentDetails">
+        <h5 class="card-title p-3">Szczegóły kary</h5>
+        <div class="form-row mx-3">
+          <div class="col">
+            <label
+              (click)="
+                toggle('prison', 'punishmentDetails');
+                changeHandler(punishmentDetails.prison, 'prison')
+              "
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.prison ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.prison ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Pozbawienie wolności?</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('service', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.service ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.service ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Ograniczenie wolności?</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('fine', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.fine ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.fine ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Grzywna</b>
+          </div>
+        </div>
+        <hr />
+        <div class="form-row mx-3">
+          <div class="col">
+            <label
+              (click)="toggle('probation', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.probation ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.probation ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Dozór kuratora</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('fee', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.fee ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.fee ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Świadczenie pieniężne</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('driveBan', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.driveBan ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.driveBan ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Zakaz prowadzenia pojazdów</b>
+          </div>
+        </div>
+        <div class="form-row mx-3">
+          <div class="col">
+            <label
+              (click)="toggle('alimony', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.alimony ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.alimony ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Alimentacja</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('damageRepair', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.damageRepair ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.damageRepair ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Obowiązek naprawienia szkody</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('alcoRefrain', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.alcoRefrain ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.alcoRefrain ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Powstrzymanie od nadużywania alkoholu</b>
+          </div>
+        </div>
+        <div class="form-row mx-3">
+          <div class="col">
+            <label
+              (click)="toggle('drugRefrain', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.drugRefrain ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.drugRefrain ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Stosowania środków odurzających</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('behave', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.behave ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.behave ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Poprawnego zachowania</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('compensation', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.compensation ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.compensation ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Orzeczono nawiązkę</b>
+          </div>
+        </div>
+        <div class="form-row mx-3">
+          <div class="col">
+            <label
+              (click)="toggle('crimeBenef', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.crimeBenef ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.crimeBenef ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Orzeczono przepadek korzyści</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('expenses', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.expenses ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.expenses ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Koszty postępowania</b>
+          </div>
+          <div class="col">
+            <label
+              (click)="toggle('publicSentence', 'punishmentDetails')"
+              class="btn btn-secondary btn-sm mx-2"
+              style="width: 30px"
+            >
+              <span
+                class="fas fa-check"
+                [ngClass]="punishmentDetails.publicSentence ? 'd-inline' : 'd-none'"
+              ></span>
+              <span
+                class="fas fa-times"
+                [ngClass]="punishmentDetails.publicSentence ? 'd-none' : 'd-inline'"
+              ></span>
+            </label>
+            <b>Upubliczniono wyrok</b>
+          </div>
+        </div>
+        <div *ngIf="punishmentDetails.prison" class="card m-3" formGroupName="prisonForm">
+          <h5 class="card-title">Kara pozbawienia wolności</h5>
+          <div class="form-row mx-3">
+            <div class="col">
+              <div class="btn-group btn-group-toggle mx-3" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" />
+                  Bezwzględna
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off" />
+                  Z warunkowym zawieszeniem wykonania
+                </label>
+              </div>
+            </div>
+            <div class="col">
+              <label
+                (click)="toggle('publicSentence', 'punishmentDetails')"
+                class="btn btn-secondary btn-sm mx-2"
+                style="width: 30px"
+              >
+                <span class="fas fa-check" [ngClass]="accounted ? 'd-inline' : 'd-none'"></span>
+                <span class="fas fa-times" [ngClass]="accounted ? 'd-none' : 'd-inline'"></span>
+              </label>
+              <b>Zaliczenie art. 63 kk ?</b>
+            </div>
+          </div>
+          <div class="form-row mx-3">
+            <div class="col">
+              <label class="p-1">Wymiar (w miesiącach)</label>
+              <input type="number" class="form-control" placeholder="1" formControlName="length" />
+            </div>
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Okres próby (w latach) </label>
+              <input
+                id="probationPeriod"
+                type="number"
+                class="form-control"
+                placeholder="1"
+                formControlName="probationLength"
+              />
+            </div>
+            <div class="col">
+              <label class="p-1">Zaliczone dni</label>
+              <input
+                type="number"
+                class="form-control"
+                placeholder="1"
+                formControlName="countedDays"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="card m-3">
+          <h5 class="card-title">Kara ograniczenia wolności</h5>
+          <div class="form-row mx-3">
+            <div class="col">
+              <div class="btn-group btn-group-toggle mx-3" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" />
+                  Praca społecznie użyteczna
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off" />
+                  Potrącenia z wynagrodzenia
+                </label>
+              </div>
+            </div>
+            <div class="col">
+              <label
+                (click)="toggle('publicSentence', 'punishmentDetails')"
+                class="btn btn-secondary btn-sm mx-2"
+                style="width: 30px"
+              >
+                <span
+                  class="fas fa-check"
+                  [ngClass]="punishmentDetails.publicSentence ? 'd-inline' : 'd-none'"
+                ></span>
+                <span
+                  class="fas fa-times"
+                  [ngClass]="punishmentDetails.publicSentence ? 'd-none' : 'd-inline'"
+                ></span>
+              </label>
+              <b>Zaliczenie art. 63 kk?</b>
+            </div>
+          </div>
+          <div class="form-row mx-3">
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Wymiar (w miesiącach)</label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
+            <div class="col">
+              <label for="probationPeriod" class="p-1"
+                >Miesięczny wymiar pracy/ potrącen z wynagrodzenia
+              </label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Zaliczone dni</label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
+          </div>
+        </div>
+        <div class="card m-3">
+          <h5 class="card-title">Kara grzywny</h5>
+          <div class="form-row mx-3">
+            <div class="col">
+              <div class="btn-group btn-group-toggle mx-3" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" />
+                  W stawkach
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off" />
+                  Kwotowa
+                </label>
+              </div>
+            </div>
+            <div class="col">
+              <label
+                (click)="toggle('publicSentence', 'punishmentDetails')"
+                class="btn btn-secondary btn-sm mx-2"
+                style="width: 30px"
+              >
+                <span
+                  class="fas fa-check"
+                  [ngClass]="punishmentDetails.publicSentence ? 'd-inline' : 'd-none'"
+                ></span>
+                <span
+                  class="fas fa-times"
+                  [ngClass]="punishmentDetails.publicSentence ? 'd-none' : 'd-inline'"
+                ></span>
+              </label>
+              <b>Zaliczenie art. 63 kk?</b>
+            </div>
+            <div class="col">
+              <label
+                (click)="toggle('publicSentence', 'punishmentDetails')"
+                class="btn btn-secondary btn-sm mx-2"
+                style="width: 30px"
+              >
+                <span
+                  class="fas fa-check"
+                  [ngClass]="punishmentDetails.publicSentence ? 'd-inline' : 'd-none'"
+                ></span>
+                <span
+                  class="fas fa-times"
+                  [ngClass]="punishmentDetails.publicSentence ? 'd-none' : 'd-inline'"
+                ></span>
+              </label>
+              <b>Na podstawie art. 71 par. 1 kk</b>
+            </div>
+          </div>
+          <div class="form-row mx-3">
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Liczba stawek</label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Wartość stawki </label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Wartość grzywny </label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
+            <div class="col">
+              <label for="probationPeriod" class="p-1">Zaliczone dni</label>
+              <input id="probationPeriod" type="number" class="form-control" placeholder="1" />
+            </div>
           </div>
         </div>
       </div>

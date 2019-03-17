@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { fbind } from 'q';
 
 @Component({
   selector: 'app-sentencer',
@@ -20,15 +19,39 @@ export class SentencerComponent implements OnInit {
         legalValid: '',
       }),
     }),
+    punishmentDetails: this.fb.group({
+      prison: false,
+      service: false,
+      fine: false,
+      expenses: false,
+      probation: false,
+      fee: false,
+      driveBan: false,
+      alimony: false,
+      damageRepair: false,
+      alcoRefrain: false,
+      drugRefrain: false,
+      behave: false,
+      compensation: false,
+      crimeBenef: false,
+      publicSentence: false,
+    }),
   });
+
+  @ViewChild('signature') signInput: ElementRef;
 
   constructor(private fb: FormBuilder) {}
   ngOnInit() {
+    this.signInput.nativeElement.focus();
     console.log(this.sentencer);
   }
 
   get changed() {
     return this.sentencer.get('sentenceDetails').get('changed').value;
+  }
+
+  get prisonForm() {
+    return this.sentencer.get('punishmentDetails').get('prisonForm').value;
   }
 
   get combined() {
@@ -39,15 +62,31 @@ export class SentencerComponent implements OnInit {
     return this.sentencer.get('sentenceDetails') as FormGroup;
   }
 
-  changeHandler = (enabled: boolean) => {
-    enabled ? this.addChangingSentence() : this.removeChangingSentence();
+  get punishmentDetails() {
+    return this.sentencer.get('punishmentDetails').value;
+  }
+
+  get punishmentDetailsControls() {
+    return this.sentencer.get('punishmentDetails') as FormGroup;
+  }
+
+  changeHandler = (enabled: boolean, control: string) => {
+    switch (control) {
+      case 'sentenceChanged':
+        enabled ? this.addChangingSentence() : this.removeChangingSentence();
+        break;
+      case 'prison':
+        enabled ? this.addPrison() : this.removePrison();
+        console.log(this.sentencer);
+        break;
+    }
   };
 
   addChangingSentence = () => {
     this.sentenceDetails.addControl(
       'detailsChangingSentence',
       this.fb.group({
-        court: 'sg',
+        court: 'sgSo',
         depart: 'VI',
         sign: '',
         date: '',
@@ -59,10 +98,28 @@ export class SentencerComponent implements OnInit {
     this.sentenceDetails.removeControl('detailsChangingSentence');
   }
 
-  toggle(control: string): void {
-    console.log(this.sentencer.controls.sentenceDetails['controls'][control].value);
-    this.sentencer.controls.sentenceDetails.patchValue({
-      [control]: !this.sentencer.controls.sentenceDetails['controls'][control].value,
+  addPrison() {
+    this.punishmentDetailsControls.addControl(
+      'prisonForm',
+      this.fb.group({
+        probation: false,
+        accounted: false,
+        length: 6,
+        probationLength: { value: null, disabled: true },
+        countedDays: { value: null, disabled: true },
+      }),
+    );
+  }
+
+  removePrison() {
+    this.punishmentDetailsControls.removeControl('prisonForm');
+  }
+
+  toggle(control: string, controlGroup: string): void {
+    // console.log(this.sentencer.get('punishmentDetails').value);
+    // console.log(this.sentencer.controls[controlGroup]['controls'][control].value);
+    this.sentencer.controls[controlGroup].patchValue({
+      [control]: !this.sentencer.controls[controlGroup]['controls'][control].value,
     });
   }
 }
